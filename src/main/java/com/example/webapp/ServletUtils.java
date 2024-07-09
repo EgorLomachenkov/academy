@@ -27,6 +27,7 @@ public class ServletUtils {
                                 final HttpServletResponse response) throws ServletException, IOException {
         System.out.println(new Date() + ". redirect to: " + path);
         response.sendRedirect(path);
+
     }
 
     public static long getLongParameter(final HttpServletRequest request, final String paramName) {
