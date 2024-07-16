@@ -11,6 +11,7 @@ import java.util.Date;
 @WebServlet(name = "LoginServlet", value = "/login1")
 public class LoginServlet extends HttpServlet {
     private UserDAOImpl userDAO = new UserDAOImpl();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Login page request " + new Date());
@@ -24,6 +25,12 @@ public class LoginServlet extends HttpServlet {
         User user = null;
         if ((user = userDAO.findUserByEmail(email)) != null) {
             if (user.getPassword().equals(psw)) {
+                HttpSession session = request.getSession();
+                session.setMaxInactiveInterval(10);
+
+                //Store user-obj within HTTP session
+                session.setAttribute("user", user);
+
                 //forward
                 return;
             } else {
