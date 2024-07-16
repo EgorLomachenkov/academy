@@ -20,10 +20,10 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String email = request.getParameter("email");
-        final String pwd = request.getParameter("pwd");
+        final String psw = request.getParameter("psw");
         User user = null;
         if ((user = userDAO.findUserByEmail(email)) != null) {
-            if (user.getPassword().equals(pwd)) {
+            if (user.getPassword().equals(psw)) {
                 //forward
                 return;
             } else {
