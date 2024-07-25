@@ -10,6 +10,7 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private boolean isActive; // not active by default
     private Timestamp createdTs;
     private Timestamp updatedTs;
 

@@ -6,4 +6,6 @@ public interface UserDAO {
 
     User findUserByEmail(String email);
     boolean createUser(User user);
+
+    boolean activate(User user);
 }

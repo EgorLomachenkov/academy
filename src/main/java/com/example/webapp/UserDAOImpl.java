@@ -21,9 +21,10 @@ public class UserDAOImpl implements UserDAO {
                 user.setId(rs.getInt(1));
                 user.setName(rs.getString(2));
                 user.setEmail(rs.getString(3));
-                user.setPassword(rs.getString(4));
-                user.setCreatedTs(rs.getTimestamp(5));
-                user.setUpdatedTs(rs.getTimestamp(6));
+                user.setActive(rs.getString(4).equalsIgnoreCase("Y"));
+                user.setPassword(rs.getString(5));
+                user.setCreatedTs(rs.getTimestamp(6));
+                user.setUpdatedTs(rs.getTimestamp(7));
                 return user;
             }
 
@@ -54,5 +55,21 @@ public class UserDAOImpl implements UserDAO {
         }
 
 
+    }
+
+    @Override
+    public boolean activate(User user) {
+        PreparedStatement pstmt = null;
+        try (Connection conn = DBUtils.getConnection()) {
+            pstmt = conn.prepareStatement("UPDATE users SET is_active = 'Y' WHERE users.email = ?");
+            pstmt.setString(1,user.getEmail());
+            return pstmt.executeUpdate() == 1;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Creation User problem", e);
+        } finally {
+            DBUtils.close(null, null, pstmt, null);
+        }
     }
 }
